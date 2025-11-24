@@ -1,0 +1,79 @@
+[
+  {
+    "id": "2c49d8e5-f5b2-4d8c-a1e6-7a8f3b2d1c0a",
+    "title": "Jersey Pro-Speed (Rojo)",
+    "description": "Jersey de microfibra transpirable, ideal para carreras de alta intensidad y ventilación máxima.",
+    "code": "JERS-R-001",
+    "price": 45.99,
+    "status": true,
+    "stock": 85,
+    "category": "Indumentaria",
+    "thumbnails": ""
+  },
+  {
+    "id": "e9f1a0b3-c7d4-4e2f-b8a9-0d1g5h3j7k9l",
+    "title": "Pantalón Enduro Lite (Negro y gris)",
+    "description": "Pantalón reforzado con kevlar, resistente a la abrasión y con paneles elásticos.",
+    "code": "PANT-N-005",
+    "price": 119.5,
+    "status": true,
+    "stock": 60,
+    "category": "Indumentaria",
+    "thumbnails": ""
+  },
+  {
+    "id": "7d2e8b6c-a4f3-4c9b-9e1d-5a6b0c4e8f2g",
+    "title": "Chaqueta Explorer Urbano",
+    "description": "Chaqueta casual con forro térmico y material resistente al viento, ideal para ciudad.",
+    "code": "CHAQ-GR-002",
+    "price": 95,
+    "status": true,
+    "stock": 60,
+    "category": "Abrigos",
+    "thumbnails": ""
+  },
+  {
+    "id": "a3b6c9d2-e5f8-4g1h-8i3j-6k9l2m5n7p0q",
+    "title": "Pantalón Enduro Lite (Negro y gris)",
+    "description": "Guantes de cuero sintético con protección en nudillos y alta sensibilidad táctil.",
+    "code": "GUAN-T-010",
+    "price": 35.75,
+    "status": true,
+    "stock": 80,
+    "category": "Accesorios",
+    "thumbnails": ""
+  },
+  {
+    "id": "cf2f980b-8aea-499d-a1af-7efb937c248f",
+    "title": "Camiseta BaseLayer Pro",
+    "description": "Camiseta de compresión térmica, mejora la circulación y mantiene la temperatura corporal.",
+    "code": "TERM-B-003",
+    "price": 40,
+    "status": true,
+    "stock": 75,
+    "category": "Indumentaria Térmica",
+    "thumbnails": ""
+  },
+  {
+    "id": "7d8eb863-8f10-4867-a1b8-ed3631896349",
+    "title": "Camiseta  Pro slimfit",
+    "description": "Camiseta de compresión térmica, mejora la circulación y mantiene la temperatura corporal.",
+    "code": "TERM-B-003",
+    "price": 70,
+    "status": true,
+    "stock": 35,
+    "category": "Indumentaria Térmica",
+    "thumbnails": ""
+  },
+  {
+    "id": "743a352c-536a-4c8b-bddc-02eaeca35b2b",
+    "status": true,
+    "thumbnails": "",
+    "title": "Jersey Pro-Speed (Negro y blanco)",
+    "description": "Jersey de microfibra transpirable, ideal para carreras de alta intensidad y ventilación máxima.",
+    "code": "JERS-R-003",
+    "price": 45.99,
+    "stock": 163,
+    "category": "Indumentaria"
+  }
+]
