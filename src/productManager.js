@@ -8,31 +8,37 @@ class ProductManager {
   
 /*AGREGAR PRODUCTO*/
   async addProduct(product) {
-    try {
-      const products = await this.getProducts();
+  try {
+    const products = await this.getProducts();
+
+    
+    if (!product.title || !product.price) {
+      throw new Error("Los campos 'title' y 'price' son obligatorios");
+    }
+
+   
+    const newProduct = {
+      ...product,
+      id: crypto.randomUUID(),
+      status: true,
+      thumbnails: product.thumbnails || [],
+      description: product.description || "Sin descripción",
+      code: product.code || 0,
+      stock: product.stock || 0,
+      category: product.category || "Sin categoría",
       
-        const requiredFields = ["title", "description", "price", "code", "stock", "category"];
+    };
 
-    for (const field of requiredFields) {
-      if (product[field] === undefined || product[field] === null || product[field] === "") {
-        throw new Error(`El campo '${field}' es obligatorio`);
-      }
-    }
+    products.push(newProduct);
+    await fs.writeFile(this.path, JSON.stringify(products, null, 2));
 
-      const newProduct = {
-        id: crypto.randomUUID(), 
-        status: true,            
-        thumbnails: [],          
-        ...product
-      };
+    return newProduct;
 
-      products.push(newProduct);
-      await fs.writeFile(this.path, JSON.stringify(products, null, 2));
-      return newProduct;
-    } catch (error) {
-      throw new Error("Error al agregar producto: " + error.message);
-    }
+  } catch (error) {
+    throw new Error("Error al agregar producto: " + error.message);
   }
+}
+
 
   async getProducts() {
     try {

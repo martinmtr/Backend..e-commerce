@@ -1,0 +1,25 @@
+<div><h1>Bienvenidos</h1></div>
+
+
+<div class="container">
+    <h1>Lista de Productos Actualizados</h1>
+
+    {{#if products}}
+        <ul class="list-products">
+            {{#each products}}
+                <li class="products">
+                    {{#if this.thumbnails}}
+                        <img src="{{this.thumbnails}}" alt="{{this.title}}" />
+                    {{/if}}
+                    
+                    <h2 class="title">{{this.title}}</h2>
+                    <h3 class="description">{{this.description}}</h3>
+                    <h4 class="price">Precio: ${{this.price}}</h4>
+                    </li>
+            {{/each}}
+        </ul>
+    {{else}}
+        <p class="no-product">No hay productos cargados en el sistema.</p>
+    {{/if}}
+    
+</div>

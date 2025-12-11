@@ -1,7 +1,7 @@
 {
   "name": "backend1",
   "version": "1.0.0",
-  "description": "APP E-commerce",
+  "description": "Proyecto APP E-commerce",
   "main": "index.js",
   "type": "module",
   "scripts": {
@@ -11,7 +11,18 @@
   "author": "Martin Jankowiec",
   "license": "ISC",
   "dependencies": {
-    "express": "^5.1.0"
+    "express": "^5.1.0",
+    "express-handlebars": "^8.0.3",
+    "multer": "^2.0.2",
+    "socket.io": "^4.8.1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/martinmtr/Backend..e-commerce.git"
+  },
+  "bugs": {
+    "url": "https://github.com/martinmtr/Backend..e-commerce/issues"
+  },
+  "homepage": "https://github.com/martinmtr/Backend..e-commerce#readme",
   "devDependencies": {}
 }

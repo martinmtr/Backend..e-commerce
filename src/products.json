@@ -1,14 +1,14 @@
 [
   {
     "id": "2c49d8e5-f5b2-4d8c-a1e6-7a8f3b2d1c0a",
-    "title": "Jersey Pro-Speed (Rojo)",
+    "title": "Jersey Pro-Speed (Degrade)",
     "description": "Jersey de microfibra transpirable, ideal para carreras de alta intensidad y ventilación máxima.",
     "code": "JERS-R-001",
     "price": 45.99,
     "status": true,
     "stock": 85,
     "category": "Indumentaria",
-    "thumbnails": ""
+    "thumbnails": "/img/jersey.webp"
   },
   {
     "id": "e9f1a0b3-c7d4-4e2f-b8a9-0d1g5h3j7k9l",
@@ -19,7 +19,7 @@
     "status": true,
     "stock": 60,
     "category": "Indumentaria",
-    "thumbnails": ""
+    "thumbnails": "/img/pantalon.webp"
   },
   {
     "id": "7d2e8b6c-a4f3-4c9b-9e1d-5a6b0c4e8f2g",
@@ -30,18 +30,7 @@
     "status": true,
     "stock": 60,
     "category": "Abrigos",
-    "thumbnails": ""
-  },
-  {
-    "id": "a3b6c9d2-e5f8-4g1h-8i3j-6k9l2m5n7p0q",
-    "title": "Pantalón Enduro Lite (Negro y gris)",
-    "description": "Guantes de cuero sintético con protección en nudillos y alta sensibilidad táctil.",
-    "code": "GUAN-T-010",
-    "price": 35.75,
-    "status": true,
-    "stock": 80,
-    "category": "Accesorios",
-    "thumbnails": ""
+    "thumbnails": "/img/chaqueta.jfif"
   },
   {
     "id": "cf2f980b-8aea-499d-a1af-7efb937c248f",
@@ -52,7 +41,7 @@
     "status": true,
     "stock": 75,
     "category": "Indumentaria Térmica",
-    "thumbnails": ""
+    "thumbnails": "/img/images.jfif"
   },
   {
     "id": "7d8eb863-8f10-4867-a1b8-ed3631896349",
@@ -63,17 +52,28 @@
     "status": true,
     "stock": 35,
     "category": "Indumentaria Térmica",
-    "thumbnails": ""
+    "thumbnails": "/img/camiseta.jpg"
   },
   {
     "id": "743a352c-536a-4c8b-bddc-02eaeca35b2b",
     "status": true,
-    "thumbnails": "",
+    "thumbnails": "/img/semi_pro_-_speed_supply_01.webp",
     "title": "Jersey Pro-Speed (Negro y blanco)",
     "description": "Jersey de microfibra transpirable, ideal para carreras de alta intensidad y ventilación máxima.",
     "code": "JERS-R-003",
     "price": 45.99,
     "stock": 163,
     "category": "Indumentaria"
+  },
+  {
+    "title": "Botas",
+    "price": 5500,
+    "description": "Tecnologia tech 3",
+    "thumbnails": "/img/1765335146262-botas.jfif",
+    "id": "7374c995-c8a4-443d-b2a0-6bbf4ceaac3a",
+    "status": true,
+    "code": 0,
+    "stock": 0,
+    "category": "Sin categoría"
   }
 ]

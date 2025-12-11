@@ -4,6 +4,8 @@ import ProductManager from "../productManager.js";
 const router = Router();
 const productManager = new ProductManager("./src/products.json");
 
+
+
 /**LISTA DE PRODUCTO */
 
 router.get("/", async (req, res) => {

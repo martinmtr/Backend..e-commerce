@@ -1,0 +1,41 @@
+<script src="/socket.io/socket.io.js"></script>
+<div class="container">
+  <h1>Nuestros productos</h1>
+
+  {{#with user}}
+    <h2>Bienvenido, {{username}}</h2>
+    {{#if isAdmin}}
+      <h3>Permiso de administrador</h3>
+    {{else}}
+      <h3>Permiso anulado</h3>
+    {{/if}}
+  {{/with}}
+
+  <h2>Agregar Productos </h2>
+    <div>
+      <form action="/realTimeProducts" method="post" enctype="multipart/form-data">
+        <input type="text" name="title" placeholder="Nombre del producto" />
+        <input type="text" name="description" id="" placeholder="Descripción">
+        <input type="number" name="price" placeholder="Precio" />
+        <input type="file" name="file">
+        <button type="submit">Agregar producto</button>
+      </form>
+    </div>
+  {{#if products}}
+    <ul id="lista-productos" class="product-list">
+    {{#each products}}
+      <li class="product-card">
+        <img src="{{this.thumbnails}}" alt="" />
+        <h2 class="titulo">{{this.title}}</h2>
+        <h3 class="descripcion">{{this.description}}</h3>
+        <h4 class="precio">Precio: ${{this.price}}</h4>
+        <button onclick="deleteProduct('{{this.id}}')" class="btn-delete">Eliminar</button>
+      </li>
+    {{/each}}
+</ul>
+  {{else}}
+    <p class="no-product">No hay productos cargados en el sistema.</p>
+  {{/if}}
+
+</div>
+<script src="/js/realTimeProducts.js"></script>
