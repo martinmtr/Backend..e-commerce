@@ -87,7 +87,7 @@ cartsRouter.delete("/:cid", async (req, res, next) => {
 
     const cart = await Cart.findByIdAndUpdate(
       cid,
-      { product: [] },
+      { products: [] },
       { new: true }
     );
 

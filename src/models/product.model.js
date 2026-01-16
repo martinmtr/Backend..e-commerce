@@ -46,7 +46,7 @@ const productSchema = new mongoose.Schema(
       enum: ["Indumentaria", "Cascos", "Botas"],
       index: true, 
     },
-    thumbnail: {
+    thumbnails: {
       type: [String],
       trim: true,
       default: [],

@@ -70,6 +70,16 @@ viewsRouter.get("/cart", async (req, res, next) => {
     next(error);
   }
 });
-
+viewsRouter.get("/products/:pid", async (req, res, next) => {
+  try {
+    const { pid } = req.params;
+    const product = await Product.findById(pid).lean();
+    if (!product) return res.status(404).render("error", { message: "Producto no encontrado" });
+    
+    res.render("productDetail", { product }); 
+  } catch (error) {
+    next(error);
+  }
+});
 export default viewsRouter;
 

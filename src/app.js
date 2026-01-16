@@ -20,10 +20,9 @@ const io = new Server(httpServer);
 
 connectMongoDB();
 
-// --- CONFIGURACIÓN DE HANDLEBARS CON HELPERS ---
 app.engine("handlebars", engine({
     helpers: {
-        // Helper para multiplicar (precio * cantidad)
+        
         multiply: (num1, num2) => {
             return num1 * num2;
         }

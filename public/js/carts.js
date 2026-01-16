@@ -184,6 +184,39 @@ window.checkout = async () => {
         }
     }
 };
+window.clearCart = async () => {
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const cartId = urlParams.get('cid') || localStorage.getItem('cartId');
+
+    if (!cartId) return;
+
+    
+    const result = await Swal.fire({
+        title: '¿Vaciar todo el carrito?',
+        text: "Esta acción no se puede deshacer",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonText: 'Cancelar',
+        confirmButtonText: 'Sí, vaciar'
+    });
+
+    if (result.isConfirmed) {
+        try {
+            const response = await fetch(`/api/carts/${cartId}`, {
+                method: "DELETE" 
+            });
+
+            if (response.ok) {
+                Swal.fire("¡Vaciado!", "El carrito está limpio", "success")
+                .then(() => location.reload());
+            }
+        } catch (error) {
+            console.error("Error al vaciar:", error);
+        }
+    }
+};
 window.addToCart = addToCart;
 window.removeFromCart = removeFromCart;
 

@@ -4,17 +4,49 @@ import { io } from "../app.js";
 
 export const getAllProducts = async (req, res, next) => {
   try {
-    const { limit = 10, page = 1 } = req.query;
-    const productsData = await Product.paginate({}, { limit, page, lean: true });
-    const products = productsData.docs;
-    delete productsData.docs;
+    const { limit = 10, page = 1, sort, query } = req.query;
 
-    res.status(200).json({ status: "success", payload: products, ...productsData });
+    // Filtro dinámico (por categoría o disponibilidad)
+    const filter = {};
+    if (query) {
+      if (query === "true" || query === "false") {
+        filter.status = query === "true";
+      } else {
+        filter.category = query;
+      }
+    }
+
+    // Opciones de paginación y ordenamiento
+    const options = {
+      limit: parseInt(limit),
+      page: parseInt(page),
+      lean: true,
+      sort: sort ? { price: sort === "asc" ? 1 : -1 } : {},
+    };
+
+    const productsData = await Product.paginate(filter, options);
+
+    // Construcción de links
+    const baseUrl = `${req.protocol}://${req.get("host")}${req.baseUrl}`;
+    const prevLink = productsData.hasPrevPage ? `${baseUrl}?limit=${limit}&page=${productsData.prevPage}${sort ? `&sort=${sort}` : ""}${query ? `&query=${query}` : ""}` : null;
+    const nextLink = productsData.hasNextPage ? `${baseUrl}?limit=${limit}&page=${productsData.nextPage}${sort ? `&sort=${sort}` : ""}${query ? `&query=${query}` : ""}` : null;
+
+    res.status(200).json({
+      status: "success",
+      payload: productsData.docs,
+      totalPages: productsData.totalPages,
+      prevPage: productsData.prevPage,
+      nextPage: productsData.nextPage,
+      page: productsData.page,
+      hasPrevPage: productsData.hasPrevPage,
+      hasNextPage: productsData.hasNextPage,
+      prevLink,
+      nextLink,
+    });
   } catch (error) {
     next(error);
   }
 };
-
 export const addProduct = async (req, res, next) => {
   try {
     const productData = req.body;
@@ -22,9 +54,9 @@ export const addProduct = async (req, res, next) => {
    
     if (req.files && req.files.length > 0) {
       productData.thumbnails = req.files.map(file => `/img/${file.filename}`);
-    } else if (typeof productData.thumbnails === 'string') {
+    } else  {
       
-      productData.thumbnails = [productData.thumbnails];
+      productData.thumbnails = productData.thumbnails || [];
     }
 
     const newProduct = await Product.create(productData);
