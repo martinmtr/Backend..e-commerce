@@ -1,45 +1,59 @@
 import express from "express";
+import http from "http"; 
+import { Server } from "socket.io"; 
 import productsRouter from "./routes/products.router.js";
+import connectMongoDB from "./config/db.js";
+import dotenv from "dotenv";
+import __dirname from "../dirname.js";
+import { errorHandler } from "./middlewares/error.middleware.js";
 import cartsRouter from "./routes/carts.router.js";
-import viewsRouter from "./routes/view.router.js";
 import { engine } from "express-handlebars";
-import http from "http";
-import { Server } from "socket.io";
+import viewsRouter from "./routes/views.router.js";
+
+dotenv.config({ path: __dirname + "/.env" });
 
 const app = express();
-const PORT = 8080;
-const server = http.createServer(app);
-const io = new Server (server);
+const PORT = process.env.PORT || 8080;
 
-/*  MIDDLEWARE PARA LEER JSON Y FORMULARIOS */
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+const httpServer = http.createServer(app);
+const io = new Server(httpServer);
 
-/*  ARCHIVOS ESTATICOS */
-app.use(express.static("public"));
+connectMongoDB();
 
-/*  CONFIGURACION DE HANDLEBARS */
-app.engine("handlebars", engine());
+// --- CONFIGURACIÓN DE HANDLEBARS CON HELPERS ---
+app.engine("handlebars", engine({
+    helpers: {
+        // Helper para multiplicar (precio * cantidad)
+        multiply: (num1, num2) => {
+            return num1 * num2;
+        }
+    }
+}));
 app.set("view engine", "handlebars");
-app.set("views", "./src/views");
+app.set("views", __dirname + "/src/views");
 
-app.use((req, res, next) => {
-    req.io = io;
-    next();
+// Middlewares
+app.use(express.json());
+app.use(express.urlencoded({ extended: true })); 
+app.use(express.static(__dirname + "/public"));
+
+// Configuración de Socket.io
+io.on("connection", (socket) => {
+  console.log("Nuevo cliente conectado, ID:", socket.id);
+  socket.on("disconnect", () => {
+    console.log("Cliente desconectado");
+  });
 });
 
-/*  RUTAS */
+// Endpoints
 app.use("/api/products", productsRouter);
 app.use("/api/carts", cartsRouter);
 app.use("/", viewsRouter);
 
-/*WEB SOCKET*/
-io.on("connection", (socket)=>{
-  console.log("Nuevo usuario conectado");
-});
-/*  SERVIDOR */
-server.listen(PORT, () => {
-  console.log(`Servidor escuchando en puerto ${PORT}`);
+app.use(errorHandler);
+
+httpServer.listen(PORT, () => {
+  console.log(`Servidor iniciado correctamente en el puerto ${PORT}`);
 });
 
-
+export { io };

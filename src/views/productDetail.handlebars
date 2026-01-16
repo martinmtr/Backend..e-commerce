@@ -1,0 +1,45 @@
+<div class="container my-5">
+  <div class="row g-4">
+
+    <div class="col-md-6">
+      <img 
+        src="{{product.thumbnail}}" 
+        alt="{{product.title}}" 
+        class="img-fluid rounded shadow"
+      />
+    </div>
+
+    <div class="col-md-6">
+      <h1 class="fw-bold">{{product.title}}</h1>
+
+      <p class="text-muted">
+        Categoría: <span class="badge bg-info">{{product.category}}</span>
+      </p>
+
+      <p class="fs-5">{{product.description}}</p>
+
+      <h3 class="text-success fw-bold">$ {{product.price}}</h3>
+
+      <p>
+        Stock disponible:
+        <strong>{{product.stock}}</strong>
+      </p>
+
+      <button 
+        class="btn btn-success btn-lg mt-3"
+        onclick="addToCart('{{product._id}}')"
+      >
+        🛒 Agregar al carrito
+      </button>
+
+      <div class="mt-4">
+        <a href="/products" class="btn btn-outline-secondary">
+           Volver al listado
+        </a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script src="/js/carts.js"></script>

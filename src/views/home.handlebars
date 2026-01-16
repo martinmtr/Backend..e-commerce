@@ -1,25 +1,54 @@
-<div><h1>Bienvenidos</h1></div>
+<h1>Listado de Productos</h1>
 
+{{#if category}}
+  <h2>Categoría: {{category}}</h2>
+{{/if}}
 
 <div class="container">
-    <h1>Lista de Productos Actualizados</h1>
-
-    {{#if products}}
-        <ul class="list-products">
-            {{#each products}}
-                <li class="products">
-                    {{#if this.thumbnails}}
-                        <img src="{{this.thumbnails}}" alt="{{this.title}}" />
-                    {{/if}}
-                    
-                    <h2 class="title">{{this.title}}</h2>
-                    <h3 class="description">{{this.description}}</h3>
-                    <h4 class="price">Precio: ${{this.price}}</h4>
-                    </li>
-            {{/each}}
-        </ul>
+  {{#each products}}
+   <div style="border: 1px solid #ccc; padding: 10px; margin: 10px; display: flex; flex-direction: column; align-items: center;">
+    {{#if this.thumbnails.length}}
+        <img src="{{this.thumbnails.[0]}}" alt="{{this.title}}" style="width: 150px; height: 150px; object-fit: cover; margin-bottom: 10px;">
     {{else}}
-        <p class="no-product">No hay productos cargados en el sistema.</p>
+        <img src="/img/{{this.thumbnail}}" class="card-img-top" alt="{{this.title}}" style="height: 200px; object-fit: cover;">
     {{/if}}
-    
+
+    <h3>{{this.title}}</h3>
+    <p>Precio: ${{this.price}}</p>
+
+    <button onclick="addToCart('{{this._id}}')">
+        Agregar al Carrito
+    </button>
 </div>
+      <button
+        class="btn btn-info btn-sm w-100 mb-2"
+        onclick="showDetails('{{this.title}}', '{{this.description}}', '{{this.category}}', '{{this.stock}}')"
+      >
+        🔍 Ver detalles
+      </button>
+    </div>
+  {{else}}
+    <p>No hay productos para mostrar</p>
+  {{/each}}
+</div>
+
+<!-- PAGINACIÓN -->
+<div style="margin-top: 20px;">
+  {{#each links}}
+    <a href="{{this.link}}" style="margin: 0 5px;">
+      {{this.text}}
+    </a>
+  {{/each}}
+</div>
+
+<!-- CARRITO  -->
+<h2>Carrito</h2>
+<div id="cart">
+  <p>El carrito está vacío</p>
+</div>
+
+<!-- SWEETALERT -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/products.js"></script>
+<script src="/js/carts.js"></script>

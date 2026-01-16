@@ -1,20 +1,38 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MTR indumentaria</title>
-    <link rel="stylesheet" href="/css/style.css">
+  <meta charset="UTF-8">
+  <title>MTR Indumentaria</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/style.css">
+
 </head>
 <body>
-   <nav>
-    <ul>
-        <li><a href="/">INICIO</a></li>
-        <li><a href="/realTimeProducts">PRODUCTOS</a></li>
-        
+
+  <header>
+    <h1>MTR Indumentaria</h1>
+
+    <nav>
+      <ul>
+        <li><a href="/">Inicio</a></li>
+    <li><a href="/?category=Indumentaria">Indumentaria</a></li>
+    <li><a href="/?category=Cascos">Cascos</a></li>
+    <li><a href="/?category=Botas">Botas</a></li>
+    <li><a href="/realTimeProducts">Agregar productos</a></li>
+    <li><a href="/cart/{{cartId}}">Mi carrito</a></li>
       </ul>
     </nav>
-   {{{body}}} 
- 
+  </header>
+
+  
+  <main>
+    {{{body}}}
+  </main>
+
+  
+  <footer>
+    <p>© {{year}} MTR Indumentaria - Motocross & Offroad</p>
+  </footer>
+
 </body>
 </html>

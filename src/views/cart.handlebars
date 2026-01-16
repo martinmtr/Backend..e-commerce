@@ -1,0 +1,74 @@
+<div class="container my-5">
+  <h1 class="mb-4">🛒 Mi Carrito</h1>
+
+  {{#if products.length}}
+    <div class="list-group shadow-sm">
+
+      {{#each products}}
+        <div
+          class="list-group-item d-flex justify-content-between align-items-center p-3"
+        >
+          <div class="d-flex align-items-center">
+            {{#if this.product.thumbnails}}
+              <img
+                src="{{this.product.thumbnails.[0]}}"
+                alt="{{this.product.title}}"
+                style="width: 50px; margin-right: 15px;"
+              />
+            {{/if}}
+
+            <div>
+              <h5 class="mb-1">{{this.product.title}}</h5>
+              <p class="mb-1 text-muted">
+                Precio unitario:
+                <strong>${{this.product.price}}</strong>
+              </p>
+              <span class="badge bg-info text-dark">Cantidad:
+                {{this.quantity}}</span>
+            </div>
+          </div>
+
+          <div class="text-end">
+            <p class="mb-2">Subtotal:
+              <strong>${{multiply
+                  this.quantity
+                  this.product.price
+                }}</strong></p>
+
+            <button
+              class="btn btn-outline-danger btn-sm"
+              onclick="removeFromCart('{{this.product._id}}')"
+            >
+              ❌ Quitar
+            </button>
+          </div>
+        </div>
+      {{/each}}
+
+    </div>
+
+    <div class="mt-4 d-flex justify-content-between align-items-center">
+
+      <div class="text-end">
+        <h3>Total: $<span id="cart-total">{{total}}</span></h3>
+        <button class="btn btn-success btn-lg px-5" onclick="checkout()">
+          Finalizar compra
+        </button>
+      </div>
+    </div>
+
+  {{else}}
+    <div class="text-center py-5">
+      <h3 class="text-muted">Tu carrito está vacío</h3>
+      <a href="/" class="btn btn-primary mt-3">Ir a la tienda</a>
+    </div>
+  {{/if}}
+</div>
+<script>
+
+  const urlParams = new URLSearchParams(window.location.search); if
+  (!urlParams.has('cid')) { const cartId = localStorage.getItem('cartId'); if
+  (cartId) { window.location.href = `/cart?cid=${cartId}`; } }
+</script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="/js/carts.js"></script>

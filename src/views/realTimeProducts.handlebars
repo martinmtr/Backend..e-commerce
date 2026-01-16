@@ -1,41 +1,85 @@
-<script src="/socket.io/socket.io.js"></script>
-<div class="container">
-  <h1>Nuestros productos</h1>
+<div class="container my-5">
+  <h1 class="text-center mb-4">Administrador de Productos</h1>
 
-  {{#with user}}
-    <h2>Bienvenido, {{username}}</h2>
-    {{#if isAdmin}}
-      <h3>Permiso de administrador</h3>
-    {{else}}
-      <h3>Permiso anulado</h3>
-    {{/if}}
-  {{/with}}
-
-  <h2>Agregar Productos </h2>
-    <div>
-      <form action="/realTimeProducts" method="post" enctype="multipart/form-data">
-        <input type="text" name="title" placeholder="Nombre del producto" />
-        <input type="text" name="description" id="" placeholder="Descripción">
-        <input type="number" name="price" placeholder="Precio" />
-        <input type="file" name="file">
-        <button type="submit">Agregar producto</button>
-      </form>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="card shadow-sm p-4">
+        <h4>Nuevo Producto</h4>
+        <hr />
+        <form id="productForm">
+          <div class="mb-3">
+            <label class="form-label">Título</label>
+            <input type="text" id="title" class="form-control" required />
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Descripción</label>
+            <textarea
+              id="description"
+              class="form-control"
+              rows="2"
+              required
+            ></textarea>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Precio</label>
+            <input type="number" id="price" class="form-control" required />
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Código</label>
+            <input type="text" id="code" class="form-control" required />
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Stock</label>
+            <input type="number" id="stock" class="form-control" required />
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Categoría</label>
+            <input type="text" id="category" class="form-control" required />
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Imagen del Producto</label>
+            <input
+              type="file"
+              id="thumbnails"
+              name="thumbnails"
+              class="form-control"
+              accept="image/*"
+            />
+          </div>
+          <button type="submit" class="btn btn-primary w-100">Crear</button>
+        </form>
+      </div>
     </div>
-  {{#if products}}
-    <ul id="lista-productos" class="product-list">
-    {{#each products}}
-      <li class="product-card">
-        <img src="{{this.thumbnails}}" alt="" />
-        <h2 class="titulo">{{this.title}}</h2>
-        <h3 class="descripcion">{{this.description}}</h3>
-        <h4 class="precio">Precio: ${{this.price}}</h4>
-        <button onclick="deleteProduct('{{this.id}}')" class="btn-delete">Eliminar</button>
-      </li>
-    {{/each}}
-</ul>
-  {{else}}
-    <p class="no-product">No hay productos cargados en el sistema.</p>
-  {{/if}}
 
+    <div class="col-md-8">
+      <div class="card shadow-sm p-4">
+        <h4>Productos Actualizados</h4>
+        <hr />
+        <div id="productsContainer" class="row row-cols-1 row-cols-md-2 g-3">
+          {{#each products}}
+            <div class="col" id="card-{{this._id}}">
+              <div class="card h-100">
+                <div class="card-body">
+                  <h6 class="card-title">{{this.title}}</h6>
+                  <p
+                    class="card-text text-muted"
+                    style="font-size: 0.8rem;"
+                  >{{this.description}}</p>
+                  <p class="mb-1"><strong>${{this.price}}</strong></p>
+                  <button
+                    class="btn btn-danger btn-sm"
+                    onclick="deleteProduct('{{this._id}}')"
+                  >Eliminar</button>
+                </div>
+              </div>
+            </div>
+          {{/each}}
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-<script src="/js/realTimeProducts.js"></script>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="/js/realtime.js"></script>
