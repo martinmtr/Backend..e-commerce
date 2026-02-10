@@ -41,7 +41,9 @@ body {
 }
 
 /*******HOME******/
-
+.btn-log{font-size: 20px;
+color:white;
+text-decoration: none;}
 .list-products {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -113,12 +115,18 @@ body {
 }
 
 /* ======= CONTENEDOR PRINCIPAL ======= */
-
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 400px); 
+  gap: 20px;
+  padding: 20px;
+}
 .container {
-  max-width: 900px;
+ 
+  max-width: 400px;
   margin: auto;
   padding: 20px;
-  background: rgb(185, 170, 170);
+  background: rgb(253, 246, 246);
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
@@ -136,7 +144,26 @@ h2, h3, h4 {
 }
 
 /* ======= LISTADO DE PRODUCTOS ======= */
-
+.carrito{text-align: center;
+  background: linear-gradient(135deg, #55569b, #0660f1);
+  color: #fff;
+  padding: 14px;
+  border-radius: 10px;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s;}
+.detalle{text-align: center;
+  background: linear-gradient(135deg, #6366f1, #3b82f6);
+  color: #fff;
+  padding: 14px;
+  border-radius: 10px;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s;}
 .product-list {
   list-style: none;
   display: grid;
@@ -279,3 +306,4 @@ form button:hover {
 form button:active {
   transform: scale(0.98);
 }
+

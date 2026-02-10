@@ -1,31 +1,32 @@
-<h1>Listado de Productos</h1>
-
+<h1>Todos nuestros Productos</h1>
+<li><a href="/login" class="btn-log">Iniciar o crear usuario</a></li>
 {{#if category}}
   <h2>Categoría: {{category}}</h2>
 {{/if}}
 
-<div class="container">
+<div class="products-grid">
   {{#each products}}
-   <div style="border: 1px solid #ccc; padding: 10px; margin: 10px; display: flex; flex-direction: column; align-items: center;">
-    {{#if this.thumbnails.length}}
-        <img src="{{this.thumbnails.[0]}}" alt="{{this.title}}" style="width: 150px; height: 150px; object-fit: cover; margin-bottom: 10px;">
-    {{else}}
-        <img src="/img/{{this.thumbnails}}" class="card-img-top" alt="{{this.title}}" style="height: 200px; object-fit: cover;">
-    {{/if}}
+    <div class="product-card">
 
-    <h3>{{this.title}}</h3>
-    <p>Precio: ${{this.price}}</p>
+      {{#if this.thumbnails.length}}
+        <img src="{{this.thumbnails.[0]}}" alt="{{this.title}}">
+      {{else}}
+        <img src="/img/{{this.thumbnails}}" alt="{{this.title}}">
+      {{/if}}
 
-    <button onclick="addToCart('{{this._id}}')">
+      <h3>{{this.title}}</h3>
+      <p>Precio: ${{this.price}}</p>
+
+      <button class="carrito" onclick="addToCart('{{this._id}}')">
         Agregar al Carrito
-    </button>
-</div>
+      </button>
+
       <button
-        class="btn btn-info btn-sm w-100 mb-2"
-        onclick="showDetails('{{this.title}}', '{{this.description}}', '{{this.category}}', '{{this.stock}}')"
-      >
+        class="detalle"
+        onclick="showDetails('{{this.title}}', '{{this.description}}', '{{this.category}}', '{{this.stock}}')">
         🔍 Ver detalles
       </button>
+
     </div>
   {{else}}
     <p>No hay productos para mostrar</p>

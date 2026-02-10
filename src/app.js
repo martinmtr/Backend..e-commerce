@@ -1,16 +1,23 @@
+import dotenv from "dotenv";
+dotenv.config();
 import express from "express";
 import http from "http"; 
 import { Server } from "socket.io"; 
 import productsRouter from "./routes/products.router.js";
 import connectMongoDB from "./config/db.js";
-import dotenv from "dotenv";
 import __dirname from "../dirname.js";
 import { errorHandler } from "./middlewares/error.middleware.js";
 import cartsRouter from "./routes/carts.router.js";
 import { engine } from "express-handlebars";
 import viewsRouter from "./routes/views.router.js";
+import { logger } from './middlewares/logger.js';
+import { validate } from './middlewares/validate.js';
+import { auth } from './middlewares/auth.js';
+import cookieParser from "cookie-parser";
+import passport from "passport";
+import { initializePassport } from "./config/passport.config.js";
+import sessionsRouter from "./routes/sessions.router.js";
 
-dotenv.config({ path: __dirname + "/.env" });
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -19,7 +26,8 @@ const httpServer = http.createServer(app);
 const io = new Server(httpServer);
 
 connectMongoDB();
-
+initializePassport();
+app.use(passport.initialize());
 app.engine("handlebars", engine({
     helpers: {
         
@@ -35,6 +43,9 @@ app.set("views", __dirname + "/src/views");
 app.use(express.json());
 app.use(express.urlencoded({ extended: true })); 
 app.use(express.static(__dirname + "/public"));
+app.use(cookieParser())
+app.use("/api/sessions", sessionsRouter);
+
 
 // Configuración de Socket.io
 io.on("connection", (socket) => {
@@ -50,6 +61,39 @@ app.use("/api/carts", cartsRouter);
 app.use("/", viewsRouter);
 
 app.use(errorHandler);
+
+app.get('/setcookies',(req,res)=>{
+
+    let datos={
+        theme:"dark", 
+        fontSize: 16, 
+        color: "blue"
+    }
+
+    res.cookie("cookie01", datos, {})
+    res.setHeader('Content-Type','application/json');
+    return res.status(200).json({payload:"cookies seteadas"});
+})
+
+
+app.get('/',(req,res)=>{
+
+    res.setHeader('Content-Type','text/plain');
+    res.status(200).send('OK');
+})
+
+app.get('/api/datos', auth, (req,res)=>{
+
+    res.setHeader('Content-Type','application/json');
+    return res.status(200).json({payload:"Datos...!!!"});
+})
+
+app.post('/api/nombre', validate, (req,res)=>{
+    let {nombre}=req.query
+
+    res.setHeader('Content-Type','application/json');
+    return res.status(201).json({payload:"Nombre: "+nombre});
+})
 
 httpServer.listen(PORT, () => {
   console.log(`Servidor iniciado correctamente en el puerto ${PORT}`);

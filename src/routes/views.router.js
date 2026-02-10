@@ -7,7 +7,7 @@ const viewsRouter = express.Router();
 /* HOME */
 viewsRouter.get("/", async (req, res, next) => {
   try {
-    const { limit = 5, page = 1, category } = req.query;
+    const { limit = 4, page = 1, category } = req.query;
 
     const filter = {};
     if (category) filter.category = category;
@@ -38,6 +38,13 @@ viewsRouter.get("/", async (req, res, next) => {
   } catch (error) {
     next(error);
   }
+});
+viewsRouter.get("/login", (req, res) => {
+  res.render("login");
+});
+
+viewsRouter.get("/register", (req, res) => {
+  res.render("register");
 });
 
 viewsRouter.get("/realtimeproducts", async (req, res) => {
@@ -81,5 +88,4 @@ viewsRouter.get("/products/:pid", async (req, res, next) => {
     next(error);
   }
 });
-export default viewsRouter;
-
+export default viewsRouter
