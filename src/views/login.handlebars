@@ -1,20 +1,14 @@
 <h2>Login</h2>
 
 <form id="loginForm">
-  <input 
-    type="email" 
-    name="email" 
-    placeholder="Email" 
-    required
-  />
+  <input type="email" name="email" placeholder="Email" required />
+  <input type="password" name="password" placeholder="Contraseña" required />
+  
+  <div style="margin: 10px 0;">
+    <a href="/forgot-password">¿Olvidaste tu contraseña?</a>
+  </div>
 
-  <input 
-    type="password" 
-    name="password" 
-    placeholder="Contraseña" 
-    required
-  />
-<a href="/register">Crear usuario</a>
+  <a href="/register">Crear usuario</a>
   <button type="submit">Ingresar</button>
 </form>
 

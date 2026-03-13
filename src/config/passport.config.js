@@ -37,15 +37,31 @@ passport.use(
   new JWTStrategy(
     {
       jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
-      secretOrKey: process.env.JWT_SECRET
+      secretOrKey: process.env.JWT_SECRET 
     },
     async (jwt_payload, done) => {
+      console.log("SECRET USADO PARA VERIFICAR:", process.env.JWT_SECRET);
       try {
-        const user = await UserModel.findById(jwt_payload.user._id);
-        if (!user) return done(null, false);
+        console.log("Contenido del Payload:", jwt_payload);
 
+        const userId = jwt_payload.user ? jwt_payload.user._id : jwt_payload._id;
+
+        if (!userId) {
+          console.log("No se encontró un ID de usuario en el token");
+          return done(null, false);
+        }
+
+        const user = await UserModel.findById(userId);
+        
+        if (!user) {
+          console.log("Usuario no encontrado en la base de datos");
+          return done(null, false);
+        }
+
+        console.log("¡Usuario autenticado correctamente:", user.email);
         return done(null, user);
       } catch (error) {
+        console.error("Error en JWT Strategy:", error);
         return done(error);
       }
     }

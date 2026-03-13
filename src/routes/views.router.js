@@ -88,4 +88,7 @@ viewsRouter.get("/products/:pid", async (req, res, next) => {
     next(error);
   }
 });
+viewsRouter.get("/forgot-password", (req, res) => {
+    res.render("forgot-password");
+});
 export default viewsRouter

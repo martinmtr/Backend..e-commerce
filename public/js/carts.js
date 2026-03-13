@@ -129,7 +129,7 @@ window.checkout = async () => {
     const cartId = localStorage.getItem("cartId");
     if (!cartId) return;
 
-   
+    
     const { value: formValues } = await Swal.fire({
         title: 'Finalizar Compra',
         html: `
@@ -138,49 +138,45 @@ window.checkout = async () => {
             <input id="swal-input3" class="swal2-input" placeholder="Email">
         `,
         focusConfirm: false,
-        showCancelButton: true,
-        confirmButtonText: 'Generar Orden',
-        cancelButtonText: 'Cancelar',
         preConfirm: () => {
-            const nombre = document.getElementById('swal-input1').value;
-            const apellido = document.getElementById('swal-input2').value;
-            const email = document.getElementById('swal-input3').value;
-
-            if (!nombre || !apellido || !email) {
-                Swal.showValidationMessage('Por favor completa todos los campos');
-                return false;
+            return {
+                nombre: document.getElementById('swal-input1').value,
+                apellido: document.getElementById('swal-input2').value,
+                email: document.getElementById('swal-input3').value
             }
-            return { nombre, apellido, email };
         }
     });
 
     
     if (formValues) {
+      console.log("Enviando email al servidor:", formValues.email);
         try {
-           
-            const orderId = Math.random().toString(36).substr(2, 9).toUpperCase();
-
-            
-            await Swal.fire({
-                title: '¡Compra Exitosa!',
-                icon: 'success',
-                html: `
-                    <div style="text-align: left; background: #f9f9f9; padding: 15px; border-radius: 8px;">
-                        <p><strong>ID de Compra:</strong> <span style="color: #28a745;">${orderId}</span></p>
-                        <p><strong>Cliente:</strong> ${formValues.nombre} ${formValues.apellido}</p>
-                        <p><strong>Enviamos el detalle a:</strong> ${formValues.email}</p>
-                    </div>
-                `,
-                confirmButtonText: 'Cerrar y limpiar carrito'
+            const response = await fetch(`/api/carts/${cartId}/purchase`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                
+                body: JSON.stringify({ email: formValues.email }) 
             });
 
-            
-            await fetch(`/api/carts/${cartId}`, { method: "DELETE" });
-            location.href = "/";
+            const result = await response.json();
 
+            if (result.status === "success") {
+                
+                await Swal.fire({
+                    title: '¡Compra Exitosa!',
+                    icon: 'success',
+                    html: `
+                        <p><strong>ID de Compra:</strong> ${result.ticket.code}</p>
+                        <p><strong>Total:</strong> $${result.ticket.amount}</p>
+                    `
+                });
+                location.href = "/";
+            } else {
+                Swal.fire('Error', result.message || 'No se pudo procesar la compra', 'error');
+            }
         } catch (error) {
-            console.error("Error al procesar la compra:", error);
-            Swal.fire('Error', 'No se pudo completar la compra', 'error');
+            console.error("Error:", error);
+            Swal.fire('Error', 'Ocurrió un error al conectar con el servidor', 'error');
         }
     }
 };

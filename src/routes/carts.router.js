@@ -1,7 +1,9 @@
 import express from "express";
 import Cart from "../models/cart.model.js";
 import { throwHttpError } from "../utils/httpError.js";
-
+import { purchaseCart } from "../services/cart.service.js";
+import passport from "passport";
+import {authorize}  from '../middlewares/auth.middleware.js';
 const cartsRouter = express.Router();
 
 // CREAR CARRITO
@@ -27,7 +29,7 @@ cartsRouter.get("/:cid", async (req, res, next) => {
 });
 
 // AGREGAR PRODUCTO AL CARRITO
-cartsRouter.post("/:cid/product/:pid", async (req, res, next) => {
+cartsRouter.post("/:cid/product/:pid",authorize(['user']) , async (req, res, next) => {
   try {
     const { cid, pid } = req.params;
     const quantity = Number(req.body?.quantity) || 1;
@@ -48,7 +50,7 @@ cartsRouter.post("/:cid/product/:pid", async (req, res, next) => {
 });
 
 // ELIMINAR PRODUCTO ESPECÍFICO DEL CARRITO
-cartsRouter.delete("/:cid/products/:pid", async (req, res, next) => {
+cartsRouter.delete("/:cid/product/:pid", async (req, res, next) => {
   try {
     const { cid, pid } = req.params;
     const cart = await Cart.findByIdAndUpdate(
@@ -69,7 +71,7 @@ cartsRouter.delete("/:cid", async (req, res, next) => {
     const { cid } = req.params;
     const cart = await Cart.findByIdAndUpdate(
       cid,
-      { products: [] }, // Corregido: "products" en plural
+      { products: [] }, 
       { new: true }
     );
     if (!cart) throwHttpError("Carrito no encontrado", 404);
@@ -78,5 +80,21 @@ cartsRouter.delete("/:cid", async (req, res, next) => {
     next(error);
   }
 });
+cartsRouter.post("/:cid/purchase", async (req, res) => {
+  
+    try {
+        const { cid } = req.params;
+       
+        const userEmail = req.body.email; 
+
+        const result = await purchaseCart(cid, userEmail);
+        
+        res.json({ status: "success", ticket: result.ticket });
+    } catch (error) {
+        res.status(500).json({ status: "error", error: error.message });
+    }
+});
+
+
 
 export default cartsRouter;
